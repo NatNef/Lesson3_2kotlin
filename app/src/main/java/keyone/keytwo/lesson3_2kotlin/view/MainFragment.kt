@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import keyone.keytwo.lesson2_2kotlin.viewmodel.MainViewModel
 import keyone.keytwo.lesson3_2kotlin.R
 import keyone.keytwo.lesson3_2kotlin.databinding.FragmentMainBinding
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
