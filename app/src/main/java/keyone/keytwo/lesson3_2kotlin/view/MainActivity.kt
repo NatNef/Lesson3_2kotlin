@@ -18,10 +18,8 @@ class MainActivity : AppCompatActivity() {
 
 //--------------------------------------
         // урок 3 массивы
-        val lesson = Lesson3()
-        lesson.mainFirstPart()
-
-
+//        val lesson = Lesson3()
+//        lesson.mainFirstPart(this)
 
     }
 }
