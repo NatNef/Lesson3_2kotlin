@@ -15,8 +15,9 @@ import kotlin.random.Random
 
 // это хранилище всех ViewModel
 
-class MainViewModel(private val liveDataToObserve:MutableLiveData<AppState> = MutableLiveData(),
-                    val repositoryImplement: RepositoryImplement = RepositoryImplement()
+class MainViewModel(
+    private val liveDataToObserve:MutableLiveData<AppState> = MutableLiveData(),
+    private val repositoryImplement: RepositoryImplement = RepositoryImplement()
 )
     :ViewModel() {
 
@@ -33,21 +34,40 @@ class MainViewModel(private val liveDataToObserve:MutableLiveData<AppState> = Mu
     // добавляем функцию, которая эмулирует запрос на сервер
     // потом /заглушки/ на состояния загрузка, удача, ошибка
     // обновлет состояние и срабатывает renderData
-    fun getDataFromRemoteSource(){
+    // для 3 урока меняем getDataFromLocalSource делим 2 метода на true false
+
+
+    //3урок делим 2 метода на true false
+    fun getWeatherFromLocalSourceWorld(){
+        getDataFromLocalSource(false)
+    }
+    fun getWeatherFromLocalSourceRus(){
+        getDataFromLocalSource(true)
+    }
+
+
+    private fun getDataFromLocalSource(isRussian:Boolean){
+
+
+        //выводим города
         liveDataToObserve.postValue(AppState.Loading)
         Thread{
             sleep(2000)
-            val r = (0..10).random()
+           // val r = (0..10).random()
 
-            if (r > 5){
-                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalSource()))
+            if (isRussian){
+                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageRus()))
             }
 
             else {
-                liveDataToObserve.postValue(AppState.Error(IllegalStateException()))
+                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageWorld()))
+              //  liveDataToObserve.postValue(AppState.Error(IllegalStateException()))
             }
 
         }.start()
     }
+    //-------------------------
+
+
 
 }

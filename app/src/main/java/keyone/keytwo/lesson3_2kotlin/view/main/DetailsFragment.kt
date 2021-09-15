@@ -1,21 +1,22 @@
-package keyone.keytwo.lesson3_2kotlin.view
+package keyone.keytwo.lesson3_2kotlin.view.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import keyone.keytwo.lesson3_2kotlin.R
 import keyone.keytwo.lesson3_2kotlin.databinding.FragmentMainBinding
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
 import keyone.keytwo.lesson3_2kotlin.viewmodel.AppState
 import keyone.keytwo.lesson3_2kotlin.viewmodel.MainViewModel
 
-class MainFragment:Fragment() {
+
+//был MainFragment
+
+class DetailsFragment:Fragment() {
 
     // представление файла fragment_main.xml в виде кода
  //   private lateinit var binding: FragmentMainBinding // FIXME утечка памяти
@@ -41,7 +42,7 @@ private lateinit var viewModel: MainViewModel
 //            return MainFragment()
 //       }
         // или сократим запись если возвращаем
-        fun newInstance()=MainFragment()
+        fun newInstance()= DetailsFragment()
         }
 
     override fun onCreateView(
@@ -111,6 +112,7 @@ private lateinit var viewModel: MainViewModel
                 setData(weather)
                 Snackbar.make(binding.mainView, "Success", Snackbar.LENGTH_LONG).show()
             }
+          //  is AppState.Error2 -> TODO()
         }
     }
 
