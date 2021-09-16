@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import keyone.keytwo.lesson3_2kotlin.view.MainActivity
 
+
 class Lesson3 {
 
     fun mainFirstPart(mainActivity: MainActivity) {

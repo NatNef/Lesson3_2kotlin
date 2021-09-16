@@ -8,15 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import keyone.keytwo.lesson3_2kotlin.R
 import keyone.keytwo.lesson3_2kotlin.databinding.FragmentMainBinding
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
+import keyone.keytwo.lesson3_2kotlin.view.OnItemViewClickListener
 import keyone.keytwo.lesson3_2kotlin.viewmodel.AppState
 import keyone.keytwo.lesson3_2kotlin.viewmodel.MainViewModel
+import ru.geekbrains.lesson_1423_2_2_main.view.main.MainFragmentAdapter
+
 
 
 //MainFragment 2 урок называется DetailsFragment
 // на 3 уроке все меняем
-class MainFragment:Fragment() {
+//OnItemViewClickListener реализует поведение
+
+class MainFragment:Fragment(), OnItemViewClickListener {
 
     // представление файла fragment_main.xml в виде кода
  //   private lateinit var binding: FragmentMainBinding // FIXME утечка памяти
@@ -26,6 +32,13 @@ class MainFragment:Fragment() {
     get(){
         return _binding!!
     }
+
+
+    // какой язык включен
+    private var isDataSetRus: Boolean = true
+
+    //реализуем адаптер
+    private var adapter = MainFragmentAdapter()
 
     //---------------------------------------------
     // реализуем, создаем viewmodel, ссылку на него
@@ -61,6 +74,33 @@ private lateinit var viewModel: MainViewModel
     // 2 все остальное
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // передаем адаптер
+        binding.mainFragmentRecyclerView.adapter= adapter
+
+        //адаптер передает себя
+        //принять фрагмент, который умеет в себя принимать клики
+        //listener это ссылка на возможность принимать в себя клики
+        adapter.setOnItemViewClickListener(this)
+
+        //3 урок повесить кливер на floatactionbutton
+        // по клику на object будет запрос
+        binding.mainFragmentFAB.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                isDataSetRus = !isDataSetRus
+                //делаем запрос
+                // эконка
+                if(isDataSetRus){
+                    viewModel.getWeatherFromLocalSourceRus()
+                    ////картинка
+                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+                }else {
+                    viewModel.getWeatherFromLocalSourceWorld()
+                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+                }
+            }
+        })
+
         //ViewModelProvider жанглирует моделями и переживают смерть MainFragment
         //сохраняет состояние View
         // создаем ссылку на  viewModel
@@ -76,7 +116,8 @@ private lateinit var viewModel: MainViewModel
         })
 
         //вызываем запрос на сервер
-        viewModel.getDataFromRemoteSource()
+        //viewModel.getDataFromRemoteSource()
+        viewModel.getWeatherFromLocalSourceRus()
         //-----------------------------
 
     }
@@ -86,18 +127,18 @@ private lateinit var viewModel: MainViewModel
     private fun renderData(appState: AppState){
         when(appState){
             is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
 
                 val throwable = appState.error
 
-                Snackbar.make(binding.mainView, "Error $throwable", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, "Error $throwable", Snackbar.LENGTH_LONG).show()
             }
 
             // делаем видимым прогресс бар призагрузке
             // добавляем сообщение, когда нет значенний
             // прописываем значения
             AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
                // binding.message.text = ""
 
             }
@@ -106,24 +147,24 @@ private lateinit var viewModel: MainViewModel
             // прописываем значения
             // добавляем Snackbar окошко снизу для ответа
             is AppState.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
                 val weather = appState.weatherData
                // binding.message.text = "Готово"
-                setData(weather)
-                Snackbar.make(binding.mainView, "Success", Snackbar.LENGTH_LONG).show()
+                adapter.setWeather(weather)
+                Snackbar.make(binding.root, "Success", Snackbar.LENGTH_LONG).show()
             }
           //  is AppState.Error2 -> TODO()
         }
     }
 
-    // прописываем выводим значенния
-    private fun setData(weather: Weather) {
-        binding.cityName.text = weather.city.name
-        binding.cityCoordinates.text = "lat ${weather.city.lat}\n lon ${weather.city.lon}"
-        binding.temperatureValue.text = weather.temperature.toString()
-        binding.feelsLikeLabel.text =  weather.feelsLike.toString()
-       // binding.feelsLikeLabel.text = "${weather.feelsLike}"
-    }
+//    // прописываем выводим значенния
+//    private fun setData(weather: Weather) {
+//        binding.cityName.text = weather.city.name
+//        binding.cityCoordinates.text = "lat ${weather.city.lat}\n lon ${weather.city.lon}"
+//        binding.temperatureValue.text = weather.temperature.toString()
+//        binding.feelsLikeLabel.text =  weather.feelsLike.toString()
+//       // binding.feelsLikeLabel.text = "${weather.feelsLike}"
+//    }
 
     //_________________________________
 
@@ -133,8 +174,21 @@ private lateinit var viewModel: MainViewModel
 
     }
 
+    // реализует поведение OnItemViewClickListener
+    // который готов в себя получать Weather
+    override fun onItemClick(weather: Weather) {
+        //откроем новый фрагмент
+        val bundle = Bundle()
+        bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KEY,weather)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+            .addToBackStack("")
+            .commit()
 
     }
+
+
+}
 
 
 

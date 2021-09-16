@@ -8,21 +8,21 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import keyone.keytwo.lesson3_2kotlin.R
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
-import ru.geekbrains.lesson_1423_2_2_main.R
-import ru.geekbrains.lesson_1423_2_2_main.domain.Weather
-import ru.geekbrains.lesson_1423_2_2_main.view.OnItemViewClickListener
+import keyone.keytwo.lesson3_2kotlin.view.OnItemViewClickListener
 
 
 //3 урок
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentViewHolder>() {
 
-    // адаптер хранит
-    
+    // адаптер
+
     // weatherData указывает на что-то в куче
     private var weatherData:List<Weather> = listOf() //список погоды
 
-    private var isDataSetRus: Boolean = true
-    private lateinit var  listener: OnItemViewClickListener
+    //передаем
+    private lateinit var listener: OnItemViewClickListener
+
+ //   private lateinit var  listener: OnItemViewClickListener
 
 
     // для доступа к weatherData пропишем и вызовем метод
@@ -31,8 +31,18 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentV
         notifyDataSetChanged()//обновляет данные все
     }
 
+    // пропишем и вызовем метод
     fun setOnItemViewClickListener(onItemViewClickListener:OnItemViewClickListener){
         listener = onItemViewClickListener
+    }
+
+
+
+
+
+
+  //  fun setOnItemViewClickListener(onItemViewClickListener:OnItemViewClickListener){
+   //     listener = onItemViewClickListener
     }
 
 
@@ -56,6 +66,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentV
     // создадим класс свой ViewHolder
     // свою функцию render принимает в себя погоду и отображает город в его списке
     //itemView ссылка на View
+// inner  для доступа к внутренним классам
      inner class MainFragmentViewHolder(view:View):RecyclerView.ViewHolder(view){
         fun render(weather: Weather){
             //получаем имя города
@@ -64,6 +75,8 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentV
             itemView.setOnClickListener( object : View.OnClickListener{
                 override fun onClick(view: View) {
                     Toast.makeText(itemView.context,"РАБОТАЕТ",Toast.LENGTH_SHORT).show()
+
+                    //  может принимать клики, пропишем это
                     listener.onItemClick(weather)
                 }
             })
@@ -71,6 +84,6 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentV
                 Toast.makeText(itemView.context, "РАБОТАЕТ", Toast.LENGTH_SHORT).show()
                 listener.onItemClick(weather)
             }
+            }
         }
-    }
-}
+

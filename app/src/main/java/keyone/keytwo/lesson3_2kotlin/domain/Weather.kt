@@ -1,8 +1,14 @@
 package keyone.keytwo.lesson3_2kotlin.domain
 
+import android.os.Parcelable
+
+@Parcelize
 data class Weather(val city:City= getDefaultCity(),
                    val temperature:Int = -1,
-                   val feelsLike:Int = -5)
+                   val feelsLike:Int = -5):
+Parcelable
+
+annotation class Parcelize
 
 private fun getDefaultCity() = City("Москва", 55.0, 37.0)
 
