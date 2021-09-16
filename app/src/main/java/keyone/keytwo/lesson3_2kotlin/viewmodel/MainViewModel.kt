@@ -52,7 +52,7 @@ class MainViewModel(
         //выводим города
         liveDataToObserve.postValue(AppState.Loading)
         Thread{
-            sleep(2000)
+            sleep(1000)
            // val r = (0..10).random()
 
             if (isRussian){
