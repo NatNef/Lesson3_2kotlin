@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="mainFragmentFAB" type="id">mainFragmentFAB</item>
-    <item name="mainFragmentLoadingLayout" type="id">mainFragmentLoadingLayout</item>
-</resources>
