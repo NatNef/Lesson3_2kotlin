@@ -76,14 +76,14 @@ class Lesson3 {
         // mutableList изменяемый
         //class Person(val name: String, var age: Int)
 // хочет var age: сделать String
-        val people: List<Person> = listOf(Person("Макс", "5"), Person("Оля", "25"))
+        val people: List<Person> = listOf(Person("Макс", 5), Person("Оля", 25))
         //
         people[0].age = 26
 
         // добавить people изменяемый MutableList исп функцию toMutableList()
         val peopleHack: MutableList<Person> = people.toMutableList()
         // добавляем нового
-        peopleHack.add(Person("Новый", "0"))
+        peopleHack.add(Person("Новый", 0))
 
         //переменная для
         var myInt: Int = 2

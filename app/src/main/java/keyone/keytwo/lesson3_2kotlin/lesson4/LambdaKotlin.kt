@@ -28,12 +28,20 @@ class LambdaKotlin {
         printMy(valAnonymous)
         printMy(valLambda)
 
-        // вывод
-
+        // лямбда - {пришло -> тело лямбды
+        // последняя строка это возврат
+        val l3 = { int1: Int, int2: Int ->
+            Log.d("mylogs", " 1")
+            Log.d("mylogs", " 2")
+            Log.d("mylogs", " 3")
+            Unit
+        }
+        // передаем значение
+        val l4 = l3(1, 3)
     }
 
     // анонимная функция
-    val valAnonymous = fun (int1:Int, int2:Int):String{
+    private val valAnonymous = fun (int1:Int, int2:Int):String{
         Log.d("mylogs", "Зашли в funAnonymous")
         return "funAnonymous"
     }
@@ -41,7 +49,7 @@ class LambdaKotlin {
     //лямбда
     // нельзя указать строгий тип
     //return@hack определитель
-    val valLambda = hack@{ int1: Int, int2: Int ->
+    private val valLambda = hack@{ int1: Int, int2: Int ->
         Log.d("mylogs", " Зашли в funLambda")
         return@hack "funLambda"
     }
