@@ -3,6 +3,8 @@ package keyone.keytwo.lesson3_2kotlin.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import keyone.keytwo.lesson3_2kotlin.R
+import keyone.keytwo.lesson3_2kotlin.lesson4.LambdaJava
+import keyone.keytwo.lesson3_2kotlin.lesson4.LambdaKotlin
 import keyone.keytwo.lesson3_2kotlin.view.main.MainFragment
 
 
@@ -17,14 +19,22 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, MainFragment.newInstance()).commit()
 
 
-    }
+
 //--------------------------------------
-        // урок 3 массивы
+    // урок 3 массивы
 //        val lesson = Lesson3()
 //        lesson.mainFirstPart(this)
 
-        // не можем создать новый объект класса AppState
-        //var appState: AppState = AppState()
+    // не можем создать новый объект класса AppState
+    //var appState: AppState = AppState()
 
+//----------------------------------------------------
+    // урок 4. Лямбда
 
+    // вызовем
+    LambdaJava.main()
+
+        LambdaKotlin().main()
+
+}
 }
