@@ -60,5 +60,6 @@ class LambdaKotlin {
         Log.d("mylogs", fun1(1, 2))
     }
 
+    // 4 урок проверка
 
 }
