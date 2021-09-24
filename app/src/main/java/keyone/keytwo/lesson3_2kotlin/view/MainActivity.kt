@@ -6,6 +6,7 @@ import keyone.keytwo.lesson3_2kotlin.R
 import keyone.keytwo.lesson3_2kotlin.lesson4.LambdaJava
 import keyone.keytwo.lesson3_2kotlin.lesson4.LambdaKotlin
 import keyone.keytwo.lesson3_2kotlin.lesson4.MyExtension
+import keyone.keytwo.lesson3_2kotlin.lesson4.main
 import keyone.keytwo.lesson3_2kotlin.view.main.MainFragment
 
 
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity() {
     // вызовем
     LambdaJava.main()
 
-        LambdaKotlin().main()
-        MyExtension().main()
-
+       // LambdaKotlin().main()
+       // MyExtension().main()
+        main()
 }
 }
