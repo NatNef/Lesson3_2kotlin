@@ -50,23 +50,38 @@ class MainViewModel(
 
 
         //выводим города
-        liveDataToObserve.postValue(AppState.Loading)
-        Thread{
-            sleep(1000)
-           // val r = (0..10).random()
+//        liveDataToObserve.postValue(AppState.Loading)
+//        Thread{
+//            sleep(1000)
+//           // val r = (0..10).random()
+//
+//            if (isRussian){
+//                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageRus()))
+//            }
+//
+//            else {
+//                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageWorld()))
+//              //  liveDataToObserve.postValue(AppState.Error(IllegalStateException()))
+//            }
+//
+//        }.start()
 
-            if (isRussian){
-                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageRus()))
-            }
-
-            else {
-                liveDataToObserve.postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageWorld()))
-              //  liveDataToObserve.postValue(AppState.Error(IllegalStateException()))
-            }
-
-        }.start()
+        // сократим
+        with(liveDataToObserve) {
+            postValue(AppState.Loading)
+            Thread{
+                sleep(1000)
+                if (isRussian){
+                    postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageRus()))
+                }
+                else {
+                    postValue(AppState.Success(repositoryImplement.getWeatherFromLocalStorageWorld()))
+                }
+            }.start()
+        }
     }
-    //-------------------------
+    // сократим
+
 
 
 

@@ -73,8 +73,14 @@ class DetailsFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //достать из аргументов погоду и передать ее в setData
-        val weather = (arguments?.getParcelable<Weather>(BUNDLE_WEATHER_KEY)) ?: Weather()
-        setData(weather)
+//        val weather = (arguments?.getParcelable<Weather>(BUNDLE_WEATHER_KEY)) ?: Weather()
+//        setData(weather)
+        // сократим
+        arguments?.let{
+            val weather = (it?.getParcelable<Weather>(BUNDLE_WEATHER_KEY)) ?: Weather()
+            setData(weather)
+        }
+
 
 
 //        // ---------------------
@@ -138,12 +144,24 @@ class DetailsFragment:Fragment() {
     }
     // прописываем выводим значенния
     private fun setData(weather: Weather) {
-        binding.cityName.text = weather.city.name
-        binding.cityCoordinates.text = "lat ${weather.city.lat}\n lon ${weather.city.lon}"
-        binding.temperatureValue.text = weather.temperature.toString()
-        binding.feelsLikeLabel.text =  weather.feelsLike.toString()
+//        binding.cityName.text = weather.city.name
+//        binding.cityCoordinates.text = "lat ${weather.city.lat}\n lon ${weather.city.lon}"
+//        binding.temperatureValue.text = weather.temperature.toString()
+//        binding.feelsLikeLabel.text =  weather.feelsLike.toString()
        // binding.feelsLikeLabel.text = "${weather.feelsLike}"
+
+        // сократим
+        with(binding) {
+            with(weather){
+                cityName.text = city.name
+                cityCoordinates.text = "lat ${city.lat}\n lon ${city.lon}"
+                temperatureValue.text = temperature.toString()
+                feelsLikeLabel.text =  feelsLike.toString()
+            }
+        }
     }
+
+
 
     //_________________________________
 

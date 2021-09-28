@@ -70,16 +70,10 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainFragmentV
             itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
                 weather.city.name
             //по клику на список нужно открыть фрагмент детаилс
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View) {
-                    Toast.makeText(itemView.context, "РАБОТАЕТ", Toast.LENGTH_SHORT).show()
-
-                    //  может принимать клики, пропишем это
-                    listener.onItemClick(weather)
-                }
-            })
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "РАБОТАЕТ", Toast.LENGTH_SHORT).show()
+
+                //  может принимать клики, пропишем это
                 listener.onItemClick(weather)
             }
         }

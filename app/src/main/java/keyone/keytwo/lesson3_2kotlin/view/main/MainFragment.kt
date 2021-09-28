@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import keyone.keytwo.lesson3_2kotlin.R
+import keyone.keytwo.lesson3_2kotlin.R.string.action_success
 import keyone.keytwo.lesson3_2kotlin.databinding.FragmentMainBinding
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
 import keyone.keytwo.lesson3_2kotlin.view.OnItemViewClickListener
@@ -70,37 +71,51 @@ private lateinit var viewModel: MainViewModel
         //binding.TextView.text = "kakoito tekst"
         return binding.root
     }
-
+//------------------------------------------
     // 2 все остальное
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // передаем адаптер
-        binding.mainFragmentRecyclerView.adapter= adapter
+//        binding.mainFragmentRecyclerView.adapter= adapter
+//        //адаптер передает себя
+//        //принять фрагмент, который умеет в себя принимать клики
+//        //listener это ссылка на возможность принимать в себя клики
+//        adapter.setOnItemViewClickListener(this)
+//
+//        //3 урок повесить кливер на floatactionbutton
+//        // по клику на object будет запрос
+//        binding.mainFragmentFAB.setOnClickListener {
+//            isDataSetRus = !isDataSetRus
+//            //делаем запрос
+//            // эконка
+//            if (isDataSetRus) {
+//                viewModel.getWeatherFromLocalSourceRus()
+//                ////картинка
+//                binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+//            } else {
+//                viewModel.getWeatherFromLocalSourceWorld()
+//                binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+//            }
+//        }
 
-        //адаптер передает себя
-        //принять фрагмент, который умеет в себя принимать клики
-        //listener это ссылка на возможность принимать в себя клики
-        adapter.setOnItemViewClickListener(this)
-
-        //3 урок повесить кливер на floatactionbutton
-        // по клику на object будет запрос
-        binding.mainFragmentFAB.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                isDataSetRus = !isDataSetRus
-                //делаем запрос
-                // эконка
-                if(isDataSetRus){
-                    viewModel.getWeatherFromLocalSourceRus()
-                    ////картинка
-                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
-                }else {
-                    viewModel.getWeatherFromLocalSourceWorld()
-                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
-                }
+        //сократим
+    with(binding) {
+        mainFragmentRecyclerView.adapter= adapter
+        adapter.setOnItemViewClickListener(this@MainFragment)
+        mainFragmentFAB.setOnClickListener {
+            isDataSetRus = !isDataSetRus
+            if (isDataSetRus) {
+                viewModel.getWeatherFromLocalSourceRus()
+                binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+            } else {
+                viewModel.getWeatherFromLocalSourceWorld()
+                mainFragmentFAB.setImageResource(R.drawable.ic_earth)
             }
-        })
+        }
+    }
 
+
+        //___---------------------------------
         //ViewModelProvider жанглирует моделями и переживают смерть MainFragment
         //сохраняет состояние View
         // создаем ссылку на  viewModel
@@ -151,11 +166,36 @@ private lateinit var viewModel: MainViewModel
                 val weather = appState.weatherData
                // binding.message.text = "Готово"
                 adapter.setWeather(weather)
-                Snackbar.make(binding.root, "Success", Snackbar.LENGTH_LONG).show()
+                binding.root.showSnackBarWithoutAction(binding.root,R.string.success, Snackbar.LENGTH_LONG)
+                binding.root.showSnackBarWithAction(binding.root,R.string.success, Snackbar.LENGTH_LONG, action_success
+                ) {
+                    if (isDataSetRus) {
+                        viewModel.getWeatherFromLocalSourceRus()
+                    } else {
+                        viewModel.getWeatherFromLocalSourceWorld()
+                    }
+
+                }
             }
-          //  is AppState.Error2 -> TODO()
         }
     }
+    fun View.showSnackBarWithoutAction( view: View, stringId: Int, length:Int){
+        Snackbar.make(view, getString(stringId), length ).show()
+    }
+
+    fun View.showSnackBarWithAction(view: View, stringResultTextId:Int, length:Int, stringActionTextId:Int,listener:View.OnClickListener) {
+
+        Snackbar.make(view, getString(stringResultTextId), length)
+            .setAction(getString(stringActionTextId), listener). show ()
+    }
+//        {
+//            if (isDataSetRus) {
+//                viewModel.getWeatherFromLocalSourceRus()
+//            } else {
+//                viewModel.getWeatherFromLocalSourceWorld()
+//            }
+//        }.show()
+
 
 //    // прописываем выводим значенния
 //    private fun setData(weather: Weather) {
