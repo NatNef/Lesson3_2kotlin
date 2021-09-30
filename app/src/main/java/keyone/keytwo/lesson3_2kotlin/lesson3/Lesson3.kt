@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import keyone.keytwo.lesson3_2kotlin.view.MainActivity
+import keyone.keytwo.lesson3_2kotlin.view.MainActivityWebView
 
 
 class Lesson3 {
 
-    fun mainFirstPart(mainActivity: MainActivity) {
+    fun mainFirstPart(mainActivity: MainActivityWebView) {
 
         val bar = AppCompatActivity().getSupportActionBar()
         val menu = AppCompatActivity().menuInflater
