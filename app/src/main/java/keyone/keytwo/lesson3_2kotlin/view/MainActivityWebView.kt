@@ -92,17 +92,20 @@ class MainActivityWebView : AppCompatActivity() {
         //вынесем вспомогательный поток
 // в главном потоке нельзя делать запрос в интернет
         thread {
-            // создадим коннекшен
+            // открыли коннекшен тпо ссылке, привели к httpConnection
             // get метод получения данных
             val urlConnection = url.openConnection() as HttpsURLConnection
+            //запрос указали точный
             urlConnection.requestMethod = "GET"
             //таймаут ответ в течении 10 сек
             urlConnection.readTimeout = 10000
             // ответ, создаем входящий поток на основе коннекта
             //вынесем вспомогательный поток
+            // буфер считали
             val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
             //все строки потоком, нужно объединить в одно
 // результат+функция+ то что пришло в реадер
+            // объединить строки
             val result = getLines(reader)
 
             // вынесем в главный поток часть кода
@@ -119,13 +122,8 @@ class MainActivityWebView : AppCompatActivity() {
             val handler = Handler(Looper.getMainLooper())
             handler.post {
 //                //binding.webView.loadData(result,"text/html; charset=utf-8","utf-8")
-                binding.webView.loadDataWithBaseURL(
-                    null,
-                    result,
-                    "text/html; charset=utf-8",
-                    "utf-8",
-                    null
-                )
+                // вывели строки
+                binding.webView.loadDataWithBaseURL(null,result,"text/html; charset=utf-8","utf-8",null)
 
         }
         // выключаем

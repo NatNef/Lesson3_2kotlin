@@ -13,6 +13,7 @@ import keyone.keytwo.lesson3_2kotlin.R.string.action_success
 import keyone.keytwo.lesson3_2kotlin.databinding.FragmentMainBinding
 import keyone.keytwo.lesson3_2kotlin.domain.Weather
 import keyone.keytwo.lesson3_2kotlin.view.OnItemViewClickListener
+import keyone.keytwo.lesson3_2kotlin.view.details.DetailsFragment
 import keyone.keytwo.lesson3_2kotlin.viewmodel.AppState
 import keyone.keytwo.lesson3_2kotlin.viewmodel.MainViewModel
 import ru.geekbrains.lesson_1423_2_2_main.view.main.MainFragmentAdapter
@@ -211,6 +212,7 @@ private lateinit var viewModel: MainViewModel
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+
 
     }
 
